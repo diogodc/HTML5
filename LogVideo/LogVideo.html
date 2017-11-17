@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Log Video</title>
+
+</head>
+
+<body>
+
+<video style="width:800px;height:400px;" id="VideoMp4">
+    <source id="mp4" src="wind.mp4" type="video/mp4">
+</video>
+ 
+ <br>
+ <br>
+
+ <button id="b_Play"   onclick="play()"> Play </button>
+ <button id="b_Pause"  onclick="pause()"> Pause </button>
+ <button id="b_Vmenos" onclick="volumeMenos()"> - Volume </button>
+ <button id="b_Vmais"  onclick="volumeMais()"> + Volume </button>
+
+ <br>
+ <br>
+ <br>
+ <hr>
+ <br>
+
+
+<button id="b_Relatorio" onclick="relatorio()"> Relatório </button>
+<br>
+<h3 id="relatorio">.</h3>
+
+</body>
+
+<script src="logVideo.js"></script>
+
+<script>
+    setTimeout('playSegundos()',1000);
+    setTimeout('pauseSegundos()',1000);
+</script>
+
+<script language="JavaScript">
+
+      var vid = document.getElementById("VideoMp4");
+      var varPlay=1;
+      var varPause=1;
+      
+      var tempoPlay = "--:--:--";
+      var tempoPause = "--:--:--";
+      var tempoVolume = "--:--:--";
+      
+      var qtdPlay = 0;
+      var qtdPausada = 0;
+      
+      var horasPLay = "0"+0; 
+      var minPlay = "0"+0;
+      var segPlay = 0;
+      
+      var horasPause = "0"+0; 
+      var minPause = "0"+0;
+      var segPause = 0;
+
+    function playSegundos(){
+        if(varPlay==1){
+            segPlay++;
+            if(segPlay==60){
+                segPlay=0;minPlay++;
+                if(minPlay<=9)minPlay="0"+minPlay;
+            }
+            if(minPlay==60){
+                minPlay="0"+0;horasPLay++;
+                if(horasPLay<=9)horasPLay="0"+horasPLay;
+            }
+            if(segPlay<=9)segPlay="0"+segPlay;
+            tempoPlay=horasPLay+":"+minPlay+":"+segPlay;
+            setTimeout('playSegundos()',1000);
+        }
+    }  // end playSegundos
+
+    function pauseSegundos(){
+        if(varPause==1){
+            segPause++;
+            if(segPause==60){
+                segPause=0;minPause++;
+                if(minPause<=9)minPause="0"+minPause;
+            }
+            if(minPause==60){
+                minPause="0"+0;horasPause++;
+                if(horasPause<=9)horasPause="0"+horasPause;
+            }
+            if(segPause<=9)segPause="0"+segPause;
+            tempoPause=horasPause+":"+minPause+":"+segPause;
+            setTimeout('pauseSegundos()',1000);
+          }
+    } // end pauseSegundos
+     
+      function addZero(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+      }
+
+      function timevol() {
+            var d = new Date();
+            var h = addZero(d.getHours());
+            var m = addZero(d.getMinutes());
+            var s = addZero(d.getSeconds());
+            tempoVolume = h + ":" + m + ":" + s;
+      } 
+      
+      function play(){
+            vid.play();
+            if (varPlay == 0) qtdPlay=qtdPlay+1;
+            varPlay=1;
+            varPause=0;
+            playSegundos();
+      }
+      
+      function pause(){
+            vid.pause();
+            if (varPause == 0) qtdPausada=qtdPausada+1;
+            varPlay=0;
+            varPause=1;
+            pauseSegundos();
+      }
+      
+    function volumeMais(){
+        vid.volume = vid.volume+0.1;
+        timevol();
+      }
+
+      function volumeMenos(){
+        vid.volume = vid.volume-0.1;
+        timevol();
+      }
+      
+      function relatorio(){
+        document.getElementById("relatorio").innerHTML = ("Tempo que passou assistindo o vídeo: "+tempoPlay+" <br> Tempo que passou com o vídeo Parado: "+tempoPause+" <br>  Quantas vezes parou o vídeo: "+qtdPausada+" <br> Quantas vezes retornou a apresentação: "+qtdPlay+" <br> Se modificou o volume (em que hora): "+tempoVolume);
+      }
+      
+
+</script>
+
+
+
+
+
+
+</html>

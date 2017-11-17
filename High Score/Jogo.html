@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jogo</title>
+	<style type="text/css">
+		canvas { border: 1px solid;	}
+	</style>
+</head>   
+<body bgcolor='silver' >
+<input type="button" name="iniciar" value="iniciar" onclick="inicio()">	
+<br>
+<input type="button" name="finalizar" value="finalizar" onclick="ranking()">	
+
+	<center>
+	<canvas id="canvas" width="600" height="500">
+		não suporta.
+	</canvas>
+	</center>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>		
+	
+	<script type="text/javascript" id="jsbin-javascript">
+
+	var scoreranking = new Array ();
+	
+	var alturajogador, laguraJogador, posicaoJogador, velocidadeJogador, pontosJogador;
+
+
+/////////////////////////////////////////////////
+ 
+
+	function ranking() {
+		//localStorage.clear();
+		
+		if(scoreranking.length <= 10) {
+			scoreranking.push (pontosJogador);
+			scoreranking.sort(function(a, b){return b-a});
+			localStorage.setItem('player', scoreranking);
+		    location.reload();
+		}
+		
+		
+		
+		// var scoreranking = localStorage.getItem('player');
+		
+		document.getElementById("rank").innerHTML = "RANKING MAIOR PONTUADOR: <br> "+ scoreranking.toString() +" PONTOS)";
+		
+		
+		
+
+		
+	/*	
+		//	if((pontosJogador>StrconverterInt(scoreranking))&&(pontosJogador>0)){	
+			if((pontosJogador>scoreranking[0])&&(pontosJogador>0)){	
+				var pessoa = prompt("PARABÉNS!!! \nVocê fez "+pontosJogador+" pontos, insira o seu nome no Ranking!!!", "");
+			
+				var contagemVetor = scoreranking.length;
+				contagemVetor++;
+			
+			
+	    	
+		    	localStorage.setItem('player', pessoa+" ("+pontosJogador);
+                //scoreranking.push = localStorage.getItem('player');
+				scoreranking[contagemVetor] = localStorage.getItem('player');
+				document.getElementById("rank").innerHTML = "RANKING MAIOR PONTUADOR: <br> "+ scoreranking.toString() +" PONTOS)";
+			
+			}
+		
+      
+*/
+
+	  
+	} // função
+
+/////////////////////////////////////////////////
+	/*
+function StrconverterInt(string) 
+{
+    var numsStr = string.replace(/[^0-9]/g,'');
+    return parseInt(numsStr);
+}
+*/
+	
+/////////////////////////////////////////////////	    	
+	
+	
+
+function inicio() {
+	
+	scoreranking = localStorage.getItem('player');
+	
+	
+	//var scoreranking = localStorage.getItem('player');
+	if(scoreranking != null){
+    	document.getElementById("rank").innerHTML = "RANKING MAIOR PONTUADOR: "+ scoreranking +" PONTOS)";}
+    else{
+    	document.getElementById("rank").innerHTML = "SEJA O MAIOR PONTUADOR";}
+
+/////////////////////
+
+
+
+/////////////////////////
+	
+	alturajogador = 15;
+	laguraJogador = 90;
+	
+	pontosJogador = 0;
+	posicaoJogador = (canvas.width - laguraJogador) / 2;
+	velocidadeJogador = 21;
+	
+	canvas = document.getElementById("canvas");
+	context = canvas.getContext("2d");				
+	
+	primeira = new bola()
+	bolas = new Array(primeira);
+	
+	document.addEventListener('keydown', keyDown);
+	
+	setInterval(loopJogo, 30);  //intervalo de repeticao
+
+}  //end inicio()
+
+
+//////////////////////////////////////////// 		
+function bola() {
+	var randomico = Math.round(Math.random() * (3 - 1) + 1) - 1;
+    this.tamanhoBola = 7;
+	this.pontos = 1;
+	
+    this.posicaoXbola = Math.random() * 600;
+    this.posicaoYbola = -10;
+    this.velocidadeBola = Math.random() * (10 - 6) + 6;
+	this.colisao = false;
+}  // end bola()
+
+
+//////////////////////////////////////////// 			
+function keyDown(e) 
+{
+		if(e.keyCode == 37) {
+			if(posicaoJogador > 0) {
+				posicaoJogador -= velocidadeJogador;
+			}
+		}
+		
+		if(e.keyCode == 39){
+			if(posicaoJogador < (canvas.width - laguraJogador))	{
+				posicaoJogador += velocidadeJogador;
+			}
+		}
+} //end KeyDown
+
+			
+//////////////////////////////////////////// 
+function loopJogo() {
+		context.clearRect(0, 0, canvas.width, canvas.height); //Limpa Tela
+
+		if(bolas.length <= 0) {
+		   bolas.push(new bola()); 
+		} // Checar bolas
+
+		bolas.forEach(function(b, randomico) {
+			context.beginPath();
+		    context.arc(b.posicaoXbola, b.posicaoYbola, b.tamanhoBola, 0, Math.PI * 2, true);
+		    context.fill();
+			
+			
+			if(b.posicaoYbola >= 50 && bolas.length <= 2) {
+				bolas.push(new bola());
+			}
+			
+			if(b.posicaoYbola <= canvas.height){
+				b.posicaoYbola += b.velocidadeBola;  
+			}
+			else{
+				bolas.splice(randomico, 1);
+			} // controle das bolas
+			
+			
+			if((b.posicaoXbola > posicaoJogador && b.posicaoXbola < posicaoJogador + laguraJogador) && b.posicaoYbola >= canvas.height - alturajogador && b.colisao == false) {
+				pontosJogador += b.pontos;
+				b.colisao = true;
+			} // if de Checar Colisão
+		});
+				
+		context.font = "30pt Arial"; // pontuacao
+		context.fillText(pontosJogador, canvas.width - 70, 50);
+						
+		context.fillRect(posicaoJogador, canvas.height - alturajogador, laguraJogador, alturajogador); //barra do jogador
+
+}  // end loopJogo
+			
+</script>
+
+ <br>
+
+Movimentação: setas para esquerda (<=) e para direita (=>) do teclado.
+<br>
+<br>
+
+<h3 id="rank"></h3>
+  
+
+
+</body>
+</html>
