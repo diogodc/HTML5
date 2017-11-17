@@ -1,0 +1,30 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>LocalStorage </title>
+	<script>
+		window.onload = function(){ 
+
+     		/*localStorage.setItem('date','11/11/1989');
+			var data = localStorage.getItem('date');
+			console.log(data);
+			*/
+			/*sessionStorage.setItem('date','11/11/1989');
+			var data = sessionStorage.getItem('date');
+			console.log(data);*/
+				
+			localStorage.setItem('user', JSON.stringify({user: 'diogo', id: 1} ) );
+			var data = JSON.parse(localStorage.getItem('user') );
+			console.log("Hello" + data.user );
+			
+		}	
+	
+	
+	
+	
+	</script>
+</head>	
+<body>
+
+</body>
+</html>

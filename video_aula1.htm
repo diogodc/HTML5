@@ -1,0 +1,62 @@
+
+<html>
+<head>
+	<title> Meu primeiro video </title>
+	
+	<script>
+		var video;
+		var b1;
+		var b2;
+		var b3;
+		
+		onload = function(){
+			video = document.getElementById("video");
+			video.addEventListener('timeupdate', update);
+			video.addEventListener('play',  play);
+			video.addEventListener('pause', pause);
+			b1 = document.getElementById("b1");
+			b1.addEventListener("click",start);
+			b2 = document.getElementById("b2");
+			b2.addEventListener("click",stop);
+			b3 = document.getElementById("b3");
+			b3.addEventListener("click",forward);
+		}
+		function forward(){
+			video.currentTime = video.currentTime + 10;
+		}
+		function start(){
+			video.play();
+		}
+		function stop(){
+			video.pause();
+		}
+		function update(){
+			console.log("currentTime = " + video.currentTime);
+		}
+		function play(){
+			console.log("PLAYING");
+		}
+		function pause(){
+			console.log("PAUSED");
+		}
+ 
+ 
+	</script>
+ 
+</head>
+
+<body>
+	<video> 
+		<source src="sintel-1024-surround.mp4" type="video/mp4">
+	</video>
+	<br>
+	<button id="b1">Play</button>
+	<button id="b2">Pause</button>
+	<button id="b3">Adiantar</button>
+		
+	
+</body>
+</html>
+	
+ 
+

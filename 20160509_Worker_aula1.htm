@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>20160509 Web Worker 01</title>
+    
+</head>
+<body>
+	<div  id="resultado">
+	</div>
+	<script>
+		//var worker = new Worker("count.js");
+		var worker = new Worker("primo.js");
+		worker.addEventListener('message',function(event){
+			document.getElementById("resultado").innerHTML = event.data;
+		});
+		worker.postMessage({num: 982451653});
+		
+		
+		
+	</script>	
+
+
+
+</body>
+</html>

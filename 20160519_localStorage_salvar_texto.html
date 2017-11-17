@@ -1,0 +1,38 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Text input Storage </title>
+	<script>
+		window.onload = function(){ 
+			var area = document.getElementById("ta");
+			
+			if(!area.value){
+				area.value = localStorage.getItem('value');
+			}
+			
+			document.getElementById('clear').addEventListener("click", 
+			function(){ 
+				localStorage.clear();
+				area.value = '';
+				} 
+			);
+			
+			area.addEventListener('keyup', 
+				function(e){
+					localStorage.setItem('value',this.value);
+				}
+			);
+		}	
+	
+	</script>
+</head>	
+<body>
+	<div>
+		<textarea id="ta" placeholder="Digite seu texto" rows="5" cols="75"> </textarea> <br>
+		<button id='save'>SAVE</button>
+		<button id='clear'>CLEAR</button>
+		<p id='log'> </p>
+	</div>	
+
+</body>
+</html>
