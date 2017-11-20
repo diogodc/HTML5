@@ -1,0 +1,30 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by anonymous (http://jsbin.com/jaradileki/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+    <head>
+        <title>Map</title>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    </head> 
+  <body>
+        <div id="map" style="height:600px; width:900px"></div>
+        <script>
+            var map = L.map('map');
+            var ufesLatLong = [-20.278380, -40.3027];
+            map.setView(ufesLatLong,15);
+            
+            var camadaDeImagem = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'); camadaDeImagem.addTo(map);
+          
+          
+          
+        </script>
+
+    </body>
+</html>
